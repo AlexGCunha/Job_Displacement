@@ -59,7 +59,7 @@ df_match = pnad %>% rownames_to_column()
 #Propensity Score matching
 m1 = matchit(tratado ~ rendimento_principal + idade  + anos_emprego  +
                factor(grupo_ocupacao)  + factor(uf),
-             exact = c("ano", "tri", "sexo")
+             exact = c("ano", "tri", "sexo"),
              method = "nearest",
              data = df_match)
 

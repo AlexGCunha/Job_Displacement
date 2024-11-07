@@ -13,7 +13,7 @@ pnad = pd.read_parquet("../data/pnad_clean.parquet")
 idade_min = 24
 idade_max = 55
 pesquisa_baseline = 2
-tempo_emprego = 2
+tempo_emprego = 3
 
 #Filtering
 #Identify individuals working full-time with a formal contract in the baseline period

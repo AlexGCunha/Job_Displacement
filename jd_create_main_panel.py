@@ -44,14 +44,17 @@ control_agg = pnad_agg[pnad_agg['tratado'] == 0]
 import matplotlib.pyplot as plt
 
 var_to_plot = ['trab_sem', 'informal', 'rendimento_principal', 'hrs_trab_sem']
+y_axis = ['Trabalhou', 'Informal', 'Rendimento Principal', 'Horas Trabalhadas']
 count = 0
 fig, axs = plt.subplots(2, 2, figsize = (10, 6))
 for i in range(2):
     for j in range(2):
-        axs[i, j].plot(treated_agg['numero_pesquisa'], treated_agg[var_to_plot[count]], label = 'Treated')
-        axs[i, j].plot(control_agg['numero_pesquisa'], control_agg[var_to_plot[count]], label = 'Control')
+        axs[i, j].plot(treated_agg['numero_pesquisa'], treated_agg[var_to_plot[count]], label = 'Treated',
+                       color = 'black', linestyle = '-')
+        axs[i, j].plot(control_agg['numero_pesquisa'], control_agg[var_to_plot[count]], label = 'Control',
+                       color = 'black', linestyle = '--')
         axs[i, j].set_xlabel('Survey')
-        axs[i, j].set_ylabel(var_to_plot[count])
+        axs[i, j].set_ylabel(y_axis[count])
         axs[i, j].set_xticks([1, 2, 3, 4, 5])
         axs[i, j].legend()
         count = count + 1
@@ -59,3 +62,6 @@ for i in range(2):
 plt.show()
 
 
+###############
+#Regressions
+import pyfixest as pf
