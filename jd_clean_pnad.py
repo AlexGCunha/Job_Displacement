@@ -4,8 +4,8 @@ import pyarrow
 pnad_path = '../data/microdados_limpos_datazoom/pnadcontinua/'
 
 #select columns to keep
-col_to_keep = ['Ano', 'Trimestre', 'ind_id', 'hous_id', 'UF', 'Capital', 'V2007', 'V2009', 'V2010',
-               'VD3004', 'V4001', 'V4009', 'V4012', 'V4019', 'V4025', 'V4028', 'V4029',
+col_to_keep = ['Ano', 'Trimestre', 'ind_id', 'hous_id', 'UF', 'Capital', 'V2007', 'V1016', 'V2009', 'V2010',
+               'VD3004', 'V4001', 'V4009', 'V4012', 'V4019', 'V4025', 'V4028', 'V4029', 'V1028',
                 'V4032', 'V4039', 'V40401', 'V40402', 'V40403', 'V4041', 'V4071', 'VD4010', 
                 'VD4017', 'VD4020'] 
 #define new column names
@@ -14,6 +14,8 @@ new_col_names = {
     'Trimestre': 'tri',
     'UF': 'uf',
     'Capital': 'capital',
+    'V1028': 'peso',
+    'V1016': 'numero_pesquisa',
     'V2007': 'sexo',
     'V2009': 'idade',
     'V2010': 'cor',
@@ -51,14 +53,14 @@ for ano in range(ano_inicial, ano_final):
     #bind to pnad_agg
     pnad_agg = pd.concat([pnad_agg, pnad])
 
-#Function to create years of employment
+#Function to create full years of employment
 def calcular_anos_emprego(row):
     if pd.notna(row['temp_emprego3']):
         return row['temp_emprego3']
     elif pd.notna(row['temp_emprego2']):
-        return round(row['temp_emprego2']/12, 0) + 1
+        return 1
     elif pd.notna(row['temp_emprego1']):
-        return round(row['temp_emprego1']/12, 0) 
+        return  0 
     else:
         return np.nan
     
@@ -77,6 +79,10 @@ pnad_agg[cols_compat] = pnad_agg[cols_compat].map(compat_cols)
 
 #drop columns
 pnad_agg.drop(['temp_emprego1', 'temp_emprego2', 'temp_emprego3'], axis = 1, inplace = True)
+
+#inpute 0 wages for those not working
+pnad_agg['rendimento_principal'] = pnad_agg['rendimento_principal'].fillna(0)
+pnad_agg['rendimento_total'] = pnad_agg['rendimento_total'].fillna(0)
 
 #save
 pnad_agg.to_parquet("../data/pnad_clean.parquet")
