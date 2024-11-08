@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import pyarrow 
 pnad_path = '../data/microdados_limpos_datazoom/pnadcontinua/'
 
 #select columns to keep
