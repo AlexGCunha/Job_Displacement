@@ -29,6 +29,8 @@ id_municipio,
 situacao_registro, 
 data_filiacao,
 data_desfiliacao,
+data_cancelamento,
+data_exclusao,
 FROM basedosdados.br_tse_filiacao_partidaria.microdados
 WHERE data_extracao = '2024-10-21';
 "
